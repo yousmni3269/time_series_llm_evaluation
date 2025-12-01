@@ -1,4 +1,5 @@
 # Data Preprocessing 
+# Data source: https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&
 
 library(tidyverse)
 library(foreign)
