@@ -3,8 +3,6 @@
 NHANES laboratory data was collected only from eligible participants, resulting in substantial biomarker missingness. After restricting to complete biomarker data, the analytic sample included 2,909 participants. Table 1 summarizes missing counts for all variables.
 
 Table 1: Missing Counts per Clinical Variables 
-## Clinical Variable Missingness (N = 6,943)
-
 | Clinical Variable               | Missing Count (%) |
 |---------------------------------|-------------------|
 | LDL cholesterol                 | 4,018 (57.9%)     |
