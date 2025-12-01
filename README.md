@@ -1,6 +1,7 @@
 # time_series_llm_evaluation
 
 This repository contains the code associated with the paper "Evaluation of Time-Series Versus General-Purpose LLM on Health Outcome Prediction."
+The data is from NHANES (https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&) and MOMENT time-series foundation model (https://github.com/moment-timeseries-foundation-model/moment/blob/main/tutorials/representation_learning.ipynb) is used. 
 The code implements the methods and analyses described in the paper, including data preprocessing, modeling, and evaluation.
 
 
