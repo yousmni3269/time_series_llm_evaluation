@@ -3,8 +3,8 @@
 This repository contains the code associated with the paper **"Evaluating Representation Embeddings from LLMs and Time-Series Foundation Models for Wearable Accelerometer-Based Health Prediction."**
 The analysis uses accelerometer data from NHANES 2003–2006 (https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&) and compares:
 
-* **[Time-series foundation model embeddings (MOMENT)](https://github.com/moment-timeseries-foundation-model/moment)**
-* **[General-purpose LLM embeddings and entropy (EntroLLM)](https://github.com/huangxq63/EntroLLM)**
+* **Time-series foundation model embeddings [(MOMENT)](https://github.com/moment-timeseries-foundation-model/moment)**
+* **General-purpose LLM embeddings and entropy [(EntroLLM)](https://github.com/huangxq63/EntroLLM)**
 * **Prompt-based LLM predictions via [OpenAI ChatGPT](https://platform.openai.com)**
 
 The repository implements the data processing, modeling, and evaluation pipeline described in the paper.

@@ -1,3 +1,5 @@
+# Supplementaries 
+
 ## Missing data counts  
 
 NHANES laboratory data was collected only from eligible participants, resulting in substantial biomarker missingness. After restricting to complete biomarker data, the analytic sample included 2,909 participants. Table 1 summarizes missing counts for all variables.
@@ -24,7 +26,6 @@ To better understand the comparative behavior of entropy and embedding represent
 
 <p align="center">
 <img width="450" height="330" alt="Picture2" src="https://github.com/user-attachments/assets/305004c1-ff6a-4605-b497-98d14a06baa2" />
-
 **Figure 1.** Physical activity patterns from participants with diverging results. (a–c) show accelerometer data from a participant whose overweight status was correctly classified as normal by the entropy-only model, while embedding-based models produced differing results. (d–f) show a participant whose overweight status was incorrectly classified as normal by the entropy-only model but correctly classified as overweight by embedding-based models.
 </p>
 
