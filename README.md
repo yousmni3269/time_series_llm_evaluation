@@ -1,4 +1,4 @@
-# time_series_llm_evaluation
+# Evaluating Representation Embeddings from LLMs and Time-Series Foundation Models for Wearable Accelerometer-Based Health Prediction.
 
 This repository contains the code associated with the paper **"Evaluating Representation Embeddings from LLMs and Time-Series Foundation Models for Wearable Accelerometer-Based Health Prediction."**
 The analysis uses accelerometer data from NHANES 2003–2006 (https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Examination&) and compares:
