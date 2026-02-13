@@ -48,7 +48,8 @@ paxraw_d2 = read_xpt("001_raw_data/paxraw_d.xpt", col_select = c("SEQN", "PAXN",
 
 
 
-# Remove missing values and average the physical activity data over 5-minute intervals for each subject
+# Remove missing values 
+# Aggregate the physical activity data over 5-minute intervals for each subject
 
 missing1 = paxraw_d1 |>
   group_by(seqn) |> 
@@ -102,7 +103,7 @@ data_total = rbind(data1,data2) |>
   
 
 # restructure 
-data_wide_bmi_cont = data_total |> 
+data_wide = data_total |> 
   mutate(
     bmi = ifelse(bmxbmi >= 25, 1, 0),
     pa = ifelse(intensity < 100, 0,
@@ -117,8 +118,9 @@ data_wide_bmi_cont = data_total |>
 save(data_wide, file = "002_data/data_wide.RData")
 write.csv(data_wide, file = "002_data/data_wide.csv") 
 
-  
-# clean the raw 1min data for MOMENT  
+
+# Clean the physical activity data over 1-minute intervals for each subject
+# This is for raw_MOMENT  
 data1_raw = paxraw_d1 |> 
   mutate(time = paste0("x", paxn)) |>  
   select(seqn, time, paxinten) |>
@@ -148,6 +150,53 @@ data_raw_full = bind_rows(data1_raw, data2_raw) |>
 
 save(data_raw_full, file = "002_data/data_raw_full.RData")
 write.csv(data_raw_full, file = "002_data/data_raw_full.csv")  
+
+
+# Aggregate the physical activity data over 20-minute intervals for each subject
+# This is for min20_MOMENT  
+data1_min20 = paxraw_d1 |>
+  mutate(min20 = floor((paxn - 1) / 20) + 1) |> # min20 interval added ranging from 1 to 504
+  group_by(seqn, min20) |> 
+  summarise(intensity = mean(paxinten)) |> 
+  anti_join(missing1, by = "seqn") |>
+  inner_join(bmx_d1, by = "seqn") |>
+  inner_join(demo_d1, by = "seqn") # 3486 subjects 
+
+data2_min20 = paxraw_d2 |>
+  mutate(min20 = floor((paxn - 1) / 20) + 1) |> # min20 interval added ranging from 1 to 504
+  group_by(seqn, min20) |> 
+  summarise(intensity = mean(paxinten)) |> 
+  anti_join(missing2, by = "seqn") |>
+  inner_join(bmx_d2, by="seqn") |>
+  inner_join(demo_d2, by="seqn") # 3457 subjects
+
+data_total_min20 = rbind(data1_min20, data2_min20) |>
+  rename(time = min20, 
+         gender = riagendr, 
+         age = ridageyr, 
+         race = ridreth1, 
+         education = dmdeduc2, 
+         marital_status = dmdmartl, 
+         pir = indfmpir) |>
+  dplyr::select(seqn, bmxbmi, time, gender, age, race, education, marital_status, pir, intensity) # 6943 subjects 
+
+# restructure 
+data_wide_min20 = data_total_min20 |> 
+  mutate(
+    bmi = ifelse(bmxbmi >= 25, 1, 0),
+    pa = ifelse(intensity < 100, 0,
+                ifelse(intensity < 760, 1,
+                       ifelse(intensity < 2200, 2,
+                              ifelse(intensity < 6000, 3, 4))))) |>
+  select(-bmxbmi, -intensity) |>
+  pivot_wider(
+    names_from = time, 
+    values_from = pa, 
+    names_prefix = "time")
+save(data_wide_min20, file = "002_data/data_wide_min20.RData")
+write.csv(data_wide_min20, file = "002_data/data_wide_min20.csv") 
+
+
 
 
 ##### Add more variables #####  

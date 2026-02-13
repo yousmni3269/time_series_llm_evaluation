@@ -1,8 +1,16 @@
+# R specific files 
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 
+# Project Folders / Data 
 001_raw_data/
 002_data/
 003_llm_data/
+
+# Tempmorary files 
+Untitled.R
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+.DS_Store

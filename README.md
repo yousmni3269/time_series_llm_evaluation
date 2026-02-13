@@ -21,6 +21,8 @@ The repository implements the data processing, modeling, and evaluation pipeline
 - `05_llm_preprocess.R` – Preparing data for general-purpose LLM predictions  
 - `06_llm_prediction.ipynb` – LLM-based overweight prediction using the OpenAI API  
 - `07_llm_evaluation.R` – Evaluation of LLM predictions vs. embedding-based approaches  
+- `08_fairness_token512.ipynb` – GPT embeddings obtained after truncating the input to 512 tokens to ensure a fair comparison 
+- `09_fairness_modeling.R` – Predictive modeling and evaluation to ensure fairness across different input lengths 
 
 ---
 
@@ -30,5 +32,6 @@ Supplemental materials include:
 
 - **Missing data counts:** Summary of missing data after restricting to the complete-case cohort.  
 - **Divergence case studies:** Participants where entropy-only and embedding-based models produced different predictions.  
+- **Fairness Test:** Analysis to ensure a fair comparison between models with different input token limits and architectural constraints.
 
 Additional supplemental materials are available in the `docs/` folder.
