@@ -44,7 +44,7 @@ data_gpt1536$married <- as.character(data_gpt1536$married)
 
 ### added for fairness
 # GPT truncated with 1536 embedding dimension 
-trunc_gpt1536 = read.csv("./002_untitled/trunc_wide_embedding_gpt1536.csv") |>
+trunc_gpt1536 = read.csv("./002_data/trunc_wide_embedding_gpt1536.csv") |>
   janitor::clean_names() |>
   dplyr::select(-x,-combined)
 
