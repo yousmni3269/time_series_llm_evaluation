@@ -135,7 +135,7 @@ write.csv(data_gpt4o_cov_baseline, "003_llm_data/llm_bmi_gpt4o_cov_baseline.csv"
 
 
 ########################### modeling #########################
-
+# clinical covariates included as covariates (with clinical covariates)
 models_bmi = function(data, sim, name){
   res = list()
   data$bmi = factor(data$bmi, 
@@ -277,7 +277,9 @@ res_bmi_avg = res_bmi |>
     method == "Raw_Moment" ~ "Raw_Moment_cov", 
     TRUE ~ method))
 
-# with covariates (only as responses)  
+
+# clinical covariates as response only (without clinical covariates)
+# same as the modeling used in 03_modeling.R file
 models_cov_bmi = function(data, sim, name){
   res = list()
   data$bmi = factor(data$bmi, 
