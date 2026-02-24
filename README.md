@@ -26,10 +26,15 @@ The repository implements the data processing, modeling, and evaluation pipeline
 
 ## Supplements  
 
-Supplemental materials include:
+Additional supplemental materials are available in the `docs/` folder. The supplemental materials include:
 
 - **Missing data counts:** Summary of missing data after restricting to the complete-case cohort.  
 - **Divergence case studies:** Participants where entropy-only and embedding-based models produced different predictions.  
 - **Fairness Test:** Analysis to ensure a fair comparison amongst models with different input token limits and architectural constraints.
+- **Risk Stratification:** Demonstration of strong clinical utility of EntroGPT by categorizing individuals into BMI risk quintiles.
+- **Decision Impact:** Analysis to illustrate relationship between the clinical referral threshold, sensitivity and unnecessary referrals.
 
-Additional supplemental materials are available in the `docs/` folder.
+
+
+
+

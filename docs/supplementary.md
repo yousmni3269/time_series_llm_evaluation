@@ -1,5 +1,13 @@
 # Supplementaries 
 
+## Table of Contents
+
+- [Missing data counts ](#missing-data-counts )
+- [Divergence Case Studies ](#divergence-case-studies )
+- [Fairness Test ](#fairness-test )
+- [Risk Stratification](#risk-stratification)
+- [Decision Impact](#decision-impact)
+
 
 ## Missing data counts  
 NHANES laboratory data was collected only from eligible participants, resulting in substantial biomarker missingness. After restricting to complete biomarker data, the analytic sample included 2,909 participants. Table 1 summarizes missing counts for all variables.
@@ -26,17 +34,22 @@ We also performed a sensitivity analysis using the full dataset (N = 6,943) to a
 To better understand the comparative behavior of entropy and embedding representations, we examined cases where the entropy-only model and embedding-based models disagreed on overweight classification (Figure 1). In cases with intermittent low-intensity movement and little moderate or vigorous activity, entropy accurately classified overweight status while embeddings over-smoothed the temporal pattern and misclassified the participant. Conversely, for participants with long sedentary stretches interrupted by distinctive bursts of activity, embeddings sometimes captured temporal regularity that entropy did not. Although informative, such cases were uncommon and did not change overall model rankings.
 
 <p align="center">
-<img width="450" height="330" alt="Picture2" src="https://github.com/user-attachments/assets/305004c1-ff6a-4605-b497-98d14a06baa2" />
-
-**Figure 1.** Physical activity patterns from participants with diverging results. (a–c) show accelerometer data from a participant whose overweight status was correctly classified as normal by the entropy-only model, while embedding-based models produced differing results. (d–f) show a participant whose overweight status was incorrectly classified as normal by the entropy-only model but correctly classified as overweight by embedding-based models.
+  <img src="figures/Picture2.png"
+       width="450"
+       alt="Divergence case studies">
 </p>
+
+<p align="center">
+  <b>Figure 1.</b> Physical activity patterns from participants with diverging results. (a–c) show accelerometer data from a participant whose overweight status was correctly classified as normal by the entropy-only model, while embedding-based models produced differing results. (d–f) show a participant whose overweight status was incorrectly classified as normal by the entropy-only model but correctly classified as overweight by embedding-based models.
+</p>
+
 
 
 
 ## Fairness Test 
 To address potential information disadvantages caused by the 512-token input limit of foundation models, we performed two additional fairness evaluations: (1) we evaluated MOMENT embeddings using 20-minute aggregated intervals to allow the model to capture the full 7-day recording period within its token limit ; and (2) we evaluated EntroGPT using input tokens truncated to 512 to directly compare its performance against EntroBERT, EntroCohere, and MOMENT under identical sequence-length constraints. 
 
-**Table 2.** Comparative Performance ACross Fairness Evaluation Models (AUC)  
+**Table 2.** Comparative Performance Across Fairness Evaluation Models (AUC)  
 | Method | Cholesterol | LDL | HDL | Triglyceride | Glucose | BMI | Arthritis | Malignancy | Breast Cancer | Skin Cancer |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Demo_cov** | 0.593 | 0.569 | 0.724 | 0.670 | 0.719 | 0.566 | 0.788 | 0.783 | 0.883 | 0.864 |
@@ -54,5 +67,76 @@ Truncating EntroGPT input tokens to 512 negatively affected its performance comp
 However, the model rankings remained largely identical and the EntroGPT truncated still achieved higher AUC values than the 5-minute MOMENT model for most outcomes, including BMI (0.583 vs. 0.565) and glucose (0.691 vs. 0.669). 
 Furthermore, using a 20-minute interval (min20_Moment) to provide the foundation model with the full week of data did not yield significant improvements or change the overall model rankings for most clinical outcomes. 
 
+
+
+
+## Risk Stratification 
+To look at hypothetical health scenario for BMI based on EntroGPT output of individuals in the test data, 
+we observed obesity prevalence across quintiles of predicted BMI probability. 
+
+**Table 3.** Obesity Prevalence Across Quitiles of EntroGPT Predicted BMI Probability
+| Model    | Quintile | N   | N_high | Prevalence | Mean_prob |
+|----------|----------|-----|--------|------------|-----------|
+| EntroGPT | 1        | 117 | 60     | 0.513      | 0.544     |
+| EntroGPT | 2        | 117 | 74     | 0.632      | 0.663     |
+| EntroGPT | 3        | 116 | 77     | 0.664      | 0.717     |
+| EntroGPT | 4        | 116 | 89     | 0.767      | 0.772     |
+| EntroGPT | 5        | 116 | 98     | 0.845      | 0.838     |
+
+There is a clear, monotonic relationship between the predicted probability quintiles and actual prevalence. 
+The observed high-BMI prevalence of individuals in the test dataset rises from 51.3% in Q1 to 84.5% in Q5. 
+Individuals in the top quintile of EntroGPT predicted probability are x1.6 more likely to have high BMI than those in the bottom quintile.
+
+
+
+
+## Decision Impact 
+We also examined how a specific threshold affects obesity referral amongst all models. First, we set the threshold to 0.7 to ensure approximately >70% Positive Predictive Value (PPV).
+Table 4 and Figure 2 below show True Positive (TP), False Positive (FP), and False Negative (FN) across different models on a single held-out test data.  
+
+**Table 4.** 
+| Model        | N_test | N_true_high | TP  | FP | FN  | sensitivity | specificity | PPV  |
+|--------------|--------|-------------|-----|----|-----|-------------|-------------|------|
+| Demo         | 582    | 398         | 235 | 92 | 163 | 59.0        | 50.0        | 71.9 |
+| EntroBERT    | 582    | 398         | 243 | 91 | 155 | 61.1        | 50.5        | 72.8 |
+| EntroCohere  | 582    | 398         | 253 | 92 | 145 | 63.6        | 50.0        | 73.3 |
+| EntroGPT     | 582    | 398         | 250 | 77 | 148 | 62.8        | 58.2        | 76.5 |
+| Entropy      | 582    | 398         | 241 | 92 | 157 | 60.6        | 50.0        | 72.4 |
+| Moment       | 582    | 398         | 207 | 80 | 191 | 52.0        | 56.5        | 72.1 |
+| Raw_Moment   | 582    | 398         | 217 | 96 | 181 | 54.5        | 47.8        | 69.3 |
+
+
+<p align="center">
+  <img src="figures/bmi_decision_threshold.png"
+       width="450"
+       alt="BMI decision threshold performance">
+</p>
+
+<p align="center">
+  <b>Figure 2.</b> Model performance under a decision threshold of 0.7 for obesity-related clinical referral. 
+</p>
+
+
+While other models like EntroCohere may have slightly higher sensitivity, EntroGPT achieves a competitive sensitivity (62.8%) while maintaining the lowest number of False Positives (77).
+Also, EntroGPT shows the highest Positive Predictive Value (76.5%), meaning that when EntroGPT flags someone for a referral, it is more likely to be a "true positive" than with any other model. 
+This reduces the burden of unnecessary clinical follow-ups.
+
+
+Then, we examined how different thresholds affect unnecessary referrals for all models. 
+Figure 3 below illustrates the trade-off between identifying at-risk individuals (Sensitivity) and avoiding unnecessary medical interventions (Unnecessary Referrals).
+
+
+<p align="center">
+  <img src="figures/bmi_threshold_sweep.png"
+       width="450"
+       alt="BMI threshold sweep">
+</p>
+
+<p align="center">
+  <b>Figure 3.</b> Sensitivity vs. unnecessary referrals across different decision thresholds.
+</p>
+
+The analysis suggests an optimal operating range for the decision threshold between 0.65 and 0.8.
+In this range, EntroGPT consistently stays toward the top-left of the trade-off curve, meaning it captures more true cases for every "false alarm" it generates compared to other models. 
 
 
