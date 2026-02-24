@@ -34,7 +34,7 @@ We also performed a sensitivity analysis using the full dataset (N = 6,943) to a
 To better understand the comparative behavior of entropy and embedding representations, we examined cases where the entropy-only model and embedding-based models disagreed on overweight classification (Figure 1). In cases with intermittent low-intensity movement and little moderate or vigorous activity, entropy accurately classified overweight status while embeddings over-smoothed the temporal pattern and misclassified the participant. Conversely, for participants with long sedentary stretches interrupted by distinctive bursts of activity, embeddings sometimes captured temporal regularity that entropy did not. Although informative, such cases were uncommon and did not change overall model rankings.
 
 <p align="center">
-  <img src="figures/Picture2.png"
+  <img src="docs/divergence_cases.png"
        width="450"
        alt="Divergence case studies">
 </p>
@@ -107,7 +107,7 @@ Table 4 and Figure 2 below show True Positive (TP), False Positive (FP), and Fal
 
 
 <p align="center">
-  <img src="figures/bmi_decision_threshold.png"
+  <img src="docs/bmi_decision_threshold.png"
        width="450"
        alt="BMI decision threshold performance">
 </p>
@@ -127,7 +127,7 @@ Figure 3 below illustrates the trade-off between identifying at-risk individuals
 
 
 <p align="center">
-  <img src="figures/bmi_threshold_sweep.png"
+  <img src="docs/bmi_threshold_sweep.png"
        width="450"
        alt="BMI threshold sweep">
 </p>
