@@ -86,6 +86,7 @@ we observed obesity prevalence across quintiles of predicted BMI probability.
 | EntroGPT | 3        | 116 | 77     | 0.664      | 0.717     |
 | EntroGPT | 4        | 116 | 89     | 0.767      | 0.772     |
 | EntroGPT | 5        | 116 | 98     | 0.845      | 0.838     |
+</div>
 
 There is a clear, monotonic relationship between the predicted probability quintiles and actual prevalence. 
 The observed high-BMI prevalence of individuals in the test dataset rises from 51.3% in Q1 to 84.5% in Q5. 
@@ -110,6 +111,7 @@ Table 4 and Figure 2 below show True Positive (TP), False Positive (FP), and Fal
 | Entropy      | 582    | 398         | 241 | 92 | 157 | 60.6        | 50.0        | 72.4 |
 | Moment       | 582    | 398         | 207 | 80 | 191 | 52.0        | 56.5        | 72.1 |
 | Raw_Moment   | 582    | 398         | 217 | 96 | 181 | 54.5        | 47.8        | 69.3 |
+</div>
 
 
 <p align="center">
